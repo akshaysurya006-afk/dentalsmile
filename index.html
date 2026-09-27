@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BrightSmile Dental — Aesthetic & Implant Dentistry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0b1b2b; --navy-soft:#132b3f; --gold:#b8945f; --gold-light:#d4b483;
+    --cream:#faf7f2; --white:#fff; --ink:#0f1a24; --muted:#6b7a8a;
+    --line:rgba(11,27,43,.09);
+    --shadow-sm:0 2px 12px rgba(11,27,43,.06);
+    --shadow-md:0 12px 40px rgba(11,27,43,.10);
+    --shadow-lg:0 24px 70px rgba(11,27,43,.16);
+    --serif:'Newsreader',Georgia,'Times New Roman',serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,sans-serif;
+    --r-sm:8px; --r-md:14px; --r-lg:24px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);color:var(--ink);background:var(--cream);
+    line-height:1.65;-webkit-font-smoothing:antialiased}
+
+  /* ---- Reveal animation ---- */
+  .reveal{opacity:0;transform:translateY(30px);
+    transition:opacity 1s cubic-bezier(.22,1,.36,1),transform 1s cubic-bezier(.22,1,.36,1)}
+  .reveal.in{opacity:1;transform:translateY(0)}
+  .reveal.d1{transition-delay:.12s}
+  .reveal.d2{transition-delay:.24s}
+  .reveal.d3{transition-delay:.36s}
+  .reveal.d4{transition-delay:.48s}
+
+  /* ---- Top bar ---- */
+  .topbar{background:var(--navy);color:#cdd8e3;font-size:12.5px;
+    letter-spacing:.4px}
+  .topbar-inner{max-width:1240px;margin:0 auto;padding:9px 28px;
+    display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+  .topbar a{color:#cdd8e3;text-decoration:none;transition:.2s}
+  .topbar a:hover{color:var(--gold-light)}
+  .topbar-left{display:flex;gap:22px;flex-wrap:wrap}
+  .topbar-right{display:flex;gap:18px;align-items:center}
+
+  /* ---- Header ---- */
+  header{background:var(--cream);position:sticky;top:0;z-index:200;
+    border-bottom:1px solid var(--line);transition:box-shadow .3s}
+  header.scrolled{box-shadow:var(--shadow-sm)}
+  .header-inner{max-width:1240px;margin:0 auto;padding:18px 28px;
+    display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .logo{display:flex;align-items:center;gap:13px;cursor:pointer}
+  .logo-mark{width:44px;height:44px;border-radius:50%;flex-shrink:0;
+    border:1.5px solid var(--gold);display:flex;align-items:center;
+    justify-content:center;font-family:var(--serif);font-size:20px;
+    color:var(--gold);font-weight:700;letter-spacing:-.5px}
+  .logo-text{display:flex;flex-direction:column;line-height:1.1}
+  .logo-name{font-family:var(--serif);font-size:19px;font-weight:700;
+    letter-spacing:.3px;color:var(--navy)}
+  .logo-sub{font-size:9.5px;letter-spacing:2.6px;text-transform:uppercase;
+    color:var(--muted);margin-top:2px}
+
+  nav.main-nav{display:flex;gap:2px;align-items:center}
+  .nav-item{padding:9px 15px;border-radius:var(--r-sm);font-size:13.5px;
+    font-weight:500;color:var(--navy-soft);cursor:pointer;border:none;
+    background:none;font-family:inherit;transition:.2s;white-space:nowrap;
+    letter-spacing:.2px;position:relative}
+  .nav-item:hover{color:var(--gold)}
+  .nav-item.active{color:var(--gold)}
+  .nav-item.active::after{content:"";position:absolute;bottom:2px;left:50%;
+    transform:translateX(-50%);width:18px;height:1.5px;background:var(--gold)}
+
+  .hamburger{display:none;background:none;border:none;cursor:pointer;
+    padding:8px;border-radius:var(--r-sm)}
+  .hamburger span{display:block;width:22px;height:1.8px;background:var(--navy);
+    margin:5px 0;transition:.3s;border-radius:2px}
+
+  /* ---- Animated call button ---- */
+  .call-btn{position:relative;display:inline-flex;align-items:center;
+    justify-content:center;height:44px;padding:0 22px;
+    background:var(--navy);color:#fff;text-decoration:none;
+    border-radius:var(--r-sm);font-weight:600;font-size:13px;
+    letter-spacing:.5px;font-family:inherit;border:none;cursor:pointer;
+    overflow:hidden;white-space:nowrap;
+    transition:background .4s ease,box-shadow .4s ease,transform .3s ease}
+  .call-btn:hover{background:var(--gold);transform:translateY(-1px);
+    box-shadow:0 10px 26px rgba(184,148,95,.35)}
+  .call-inner{position:relative;display:grid;height:20px;overflow:hidden}
+  .call-inner > span{grid-area:1/1;line-height:20px;text-align:center;
+    white-space:nowrap;transition:transform .5s cubic-bezier(.65,0,.35,1),opacity .35s ease}
+  .call-a{transform:translateY(0);opacity:1}
+  .call-b{transform:translateY(130%);opacity:0}
+  .call-btn:hover .call-a{transform:translateY(-130%);opacity:0}
+  .call-btn:hover .call-b{transform:translateY(0);opacity:1}
+
+  /* ---- Main ---- */
+  main{max-width:1240px;margin:0 auto;padding:0 28px}
+  .tab-content{display:none}
+  .tab-content.active{display:block}
+
+  .eyebrow{font-size:11px;letter-spacing:2.2px;text-transform:uppercase;
+    color:var(--gold);font-weight:600;margin-bottom:16px}
+  h1{font-family:var(--serif);font-optical-sizing:auto;font-size:clamp(32px,5vw,58px);font-weight:500;
+    line-height:1.12;letter-spacing:-.8px;color:var(--navy)}
+  h2{font-family:var(--serif);font-optical-sizing:auto;font-size:clamp(24px,3.4vw,38px);font-weight:500;
+    line-height:1.22;letter-spacing:-.4px;color:var(--navy);margin-bottom:18px}
+  h3{font-size:17px;font-weight:600;color:var(--navy);margin-bottom:8px;
+    letter-spacing:-.1px}
+  .lead{font-size:17px;color:var(--muted);max-width:620px;line-height:1.75}
+  .serif-italic{font-family:var(--serif);font-style:italic;color:var(--gold)}
+
+  /* ---- Hero ---- */
+  .hero{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch;
+    margin:56px 0 80px;background:var(--white);border-radius:var(--r-lg);
+    overflow:hidden;box-shadow:var(--shadow-md)}
+  .hero-text{padding:64px 56px;display:flex;flex-direction:column;justify-content:center}
+  .hero-text h1{margin-bottom:22px}
+  .hero-text .lead{margin-bottom:34px}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .btn-outline{padding:14px 28px;border:1.5px solid var(--navy);color:var(--navy);
+    background:transparent;border-radius:var(--r-sm);font-weight:600;
+    font-size:13px;letter-spacing:.5px;cursor:pointer;font-family:inherit;
+    transition:.25s;text-decoration:none;display:inline-flex;align-items:center}
+  .btn-outline:hover{background:var(--navy);color:#fff}
+  .hero-image{position:relative;overflow:hidden;min-height:420px}
+  .hero-image img{width:100%;height:100%;object-fit:cover;display:block}
+  .hero-image::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,transparent 55%,rgba(11,27,43,.35))}
+
+  /* ---- Stats strip ---- */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    background:var(--navy);border-radius:var(--r-lg);overflow:hidden;
+    margin-bottom:90px;box-shadow:var(--shadow-md)}
+  .stat{padding:38px 26px;text-align:center;border-right:1px solid rgba(255,255,255,.08)}
+  .stat:last-child{border-right:none}
+  .stat-num{font-family:var(--serif);font-size:34px;color:var(--gold-light);
+    font-weight:500;letter-spacing:-.4px}
+  .stat-label{font-size:11.5px;letter-spacing:1.8px;text-transform:uppercase;
+    color:#8fa3b5;margin-top:6px}
+
+  /* ---- Section ---- */
+  section{margin-bottom:90px}
+  .section-head{max-width:660px;margin-bottom:44px}
+
+  /* ---- Procedure cards (editorial) ---- */
+  .procedures{display:grid;grid-template-columns:repeat(2,1fr);gap:26px}
+  .proc{background:var(--white);border-radius:var(--r-lg);padding:38px 36px;
+    box-shadow:var(--shadow-sm);transition:.35s;position:relative;overflow:hidden;
+    border:1px solid var(--line)}
+  .proc::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:var(--gold);transform:scaleY(0);transform-origin:top;
+    transition:transform .45s cubic-bezier(.22,1,.36,1)}
+  .proc:hover::before{transform:scaleY(1)}
+  .proc:hover{transform:translateY(-5px);box-shadow:var(--shadow-md)}
+  .proc-num{font-family:var(--serif);font-size:13px;color:var(--gold);
+    letter-spacing:2px;margin-bottom:18px;display:block}
+  .proc h3{font-family:var(--serif);font-size:22px;font-weight:500;
+    margin-bottom:12px;letter-spacing:-.2px}
+  .proc p{color:var(--muted);font-size:14.5px;line-height:1.75}
+  .proc-link{display:inline-block;margin-top:18px;font-size:12.5px;
+    letter-spacing:1.4px;text-transform:uppercase;color:var(--navy);
+    font-weight:600;text-decoration:none;border-bottom:1px solid var(--gold);
+    padding-bottom:3px;transition:.25s}
+  .proc-link:hover{color:var(--gold);letter-spacing:2px}
+
+  /* ---- Featured doctor ---- */
+  .feature-doctor{display:grid;grid-template-columns:.85fr 1.15fr;gap:0;
+    background:var(--white);border-radius:var(--r-lg);overflow:hidden;
+    box-shadow:var(--shadow-md)}
+  .feature-doctor .portrait{position:relative;min-height:480px;overflow:hidden}
+  .feature-doctor .portrait img{width:100%;height:100%;object-fit:cover}
+  .feature-doctor .bio{padding:56px 52px;display:flex;flex-direction:column;
+    justify-content:center}
+  .feature-doctor .bio h2{margin-bottom:20px}
+  .feature-doctor .bio p{color:var(--muted);font-size:15px;line-height:1.85;
+    margin-bottom:18px}
+  .credential{margin-top:24px;padding-top:24px;border-top:1px solid var(--line)}
+  .credential-label{font-size:10.5px;letter-spacing:2.4px;text-transform:uppercase;
+    color:var(--gold);font-weight:600;margin-bottom:6px}
+  .credential-value{font-family:var(--serif);font-size:15px;color:var(--navy-soft)}
+
+  /* ---- Gallery strip ---- */
+  .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .gallery figure{border-radius:var(--r-md);overflow:hidden;aspect-ratio:3/4;
+    box-shadow:var(--shadow-sm);position:relative;background:#e8edf2}
+  .gallery img{width:100%;height:100%;object-fit:cover;display:block;
+    transition:transform .8s cubic-bezier(.22,1,.36,1)}
+  .gallery figure:hover img{transform:scale(1.06)}
+  .gallery figcaption{position:absolute;bottom:0;left:0;right:0;
+    padding:16px 18px;background:linear-gradient(0deg,rgba(11,27,43,.8),transparent);
+    color:#fff;font-size:12px;letter-spacing:1.2px;text-transform:uppercase}
+
+  /* ---- Team row ---- */
+  .team-row{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  .team-card{background:var(--white);border-radius:var(--r-lg);padding:40px 30px;
+    text-align:center;box-shadow:var(--shadow-sm);border:1px solid var(--line);
+    transition:.35s}
+  .team-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-md)}
+  .team-avatar{width:100px;height:100px;border-radius:50%;margin:0 auto 22px;
+    overflow:hidden;border:2px solid var(--gold);padding:4px;background:var(--white)}
+  .team-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+  .team-card h3{font-family:var(--serif);font-size:20px;font-weight:500;
+    margin-bottom:4px}
+  .team-role{font-size:11.5px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--gold);margin-bottom:14px;font-weight:600}
+  .team-card p{color:var(--muted);font-size:14px;line-height:1.7}
+
+  /* ---- Media strip ---- */
+  .media-strip{display:flex;gap:40px;align-items:center;justify-content:center;
+    flex-wrap:wrap;padding:36px 0;border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line)}
+  .media-item{font-family:var(--serif);font-size:15px;letter-spacing:2px;
+    text-transform:uppercase;color:var(--muted);opacity:.6;transition:.3s}
+  .media-item:hover{opacity:1;color:var(--gold)}
+
+  /* ---- CTA ---- */
+  .cta{background:var(--navy);border-radius:var(--r-lg);padding:68px 56px;
+    text-align:center;box-shadow:var(--shadow-lg);position:relative;overflow:hidden}
+  .cta::before{content:"";position:absolute;top:-40%;right:-10%;width:380px;
+    height:380px;border-radius:50%;border:1px solid rgba(184,148,95,.18)}
+  .cta h2{color:#fff;margin-bottom:16px}
+  .cta p{color:#a8b8c8;max-width:520px;margin:0 auto 32px;font-size:15.5px}
+  .cta .call-btn{background:var(--gold)}
+  .cta .call-btn:hover{background:#fff;color:var(--navy)}
+
+  /* ---- Info / contact ---- */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start}
+  .info-row{display:flex;gap:18px;padding:22px 0;border-bottom:1px solid var(--line)}
+  .info-row:first-child{padding-top:0}
+  .info-key{font-size:10.5px;letter-spacing:2.2px;text-transform:uppercase;
+    color:var(--gold);font-weight:600;min-width:88px;padding-top:3px}
+  .info-val{font-size:15px;color:var(--navy-soft);line-height:1.7}
+  .info-val a{color:var(--navy-soft);text-decoration:none;transition:.2s}
+  .info-val a:hover{color:var(--gold)}
+
+  .form{background:var(--white);padding:40px 36px;border-radius:var(--r-lg);
+    box-shadow:var(--shadow-md)}
+  .form h3{font-family:var(--serif);font-size:24px;font-weight:500;margin-bottom:6px}
+  .form .form-sub{color:var(--muted);font-size:14px;margin-bottom:26px}
+  .field{margin-bottom:18px}
+  .field label{display:block;font-size:11px;letter-spacing:1.6px;
+    text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:8px}
+  .field input,.field select,.field textarea{width:100%;padding:13px 15px;
+    border:1px solid var(--line);border-radius:var(--r-sm);font-size:14.5px;
+    font-family:inherit;background:var(--cream);color:var(--ink);transition:.2s}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;
+    border-color:var(--gold);background:#fff;
+    box-shadow:0 0 0 3px rgba(184,148,95,.13)}
+  .field textarea{resize:vertical;min-height:96px}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .submit-btn{width:100%;padding:16px;background:var(--navy);color:#fff;
+    border:none;border-radius:var(--r-sm);font-weight:600;font-size:13px;
+    letter-spacing:1.4px;text-transform:uppercase;cursor:pointer;
+    font-family:inherit;transition:.3s}
+  .submit-btn:hover{background:var(--gold);box-shadow:0 10px 26px rgba(184,148,95,.3)}
+
+  /* ---- Footer ---- */
+  footer{background:var(--navy);color:#8fa3b5;margin-top:100px;padding:64px 28px 28px}
+  .footer-inner{max-width:1240px;margin:0 auto;
+    display:grid;grid-template-columns:2fr 1fr 1fr 1.3fr;gap:44px}
+  .footer h4{color:#fff;font-size:11px;letter-spacing:2.4px;text-transform:uppercase;
+    margin-bottom:20px;font-weight:600}
+  .footer p,.footer a{font-size:13.5px;color:#8fa3b5;text-decoration:none;
+    line-height:2.1;display:block;transition:.2s}
+  .footer a:hover{color:var(--gold-light)}
+  .footer-logo{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .footer-logo .logo-mark{border-color:var(--gold);color:var(--gold)}
+  .footer-logo .logo-name{color:#fff}
+  .footer-logo .logo-sub{color:#5f7488}
+  .footer-bottom{max-width:1240px;margin:48px auto 0;padding-top:24px;
+    border-top:1px solid rgba(255,255,255,.07);font-size:12px;color:#5f7488;
+    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+  /* ---- Responsive ---- */
+  @media(max-width:1024px){
+    .hero{grid-template-columns:1fr}
+    .hero-image{min-height:340px;order:-1}
+    .feature-doctor{grid-template-columns:1fr}
+    .feature-doctor .portrait{min-height:360px}
+    .contact-grid{grid-template-columns:1fr;gap:40px}
+    .footer-inner{grid-template-columns:1fr 1fr}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .stat:nth-child(2){border-right:none}
+    .stat:nth-child(1),.stat:nth-child(2){border-bottom:1px solid rgba(255,255,255,.08)}
+  }
+  @media(max-width:860px){
+    nav.main-nav{position:absolute;top:100%;left:0;right:0;background:var(--cream);
+      flex-direction:column;align-items:stretch;padding:16px;gap:2px;
+      box-shadow:var(--shadow-md);display:none;border-top:1px solid var(--line)}
+    nav.main-nav.open{display:flex}
+    .nav-item{width:100%;text-align:left;padding:13px 18px}
+    .hamburger{display:block}
+    .procedures{grid-template-columns:1fr}
+    .team-row{grid-template-columns:1fr}
+    .gallery{grid-template-columns:repeat(2,1fr)}
+    .header-inner{padding:16px 20px}
+    .topbar-inner{padding:9px 20px}
+    main{padding:0 20px}
+  }
+  @media(max-width:560px){
+    .hero-text{padding:44px 30px}
+    .hero-actions{flex-direction:column;align-items:stretch}
+    .hero-actions .call-btn,.btn-outline{justify-content:center;width:100%}
+    .feature-doctor .bio{padding:40px 28px}
+    .field-row{grid-template-columns:1fr}
+    .form{padding:32px 24px}
+    .cta{padding:48px 28px}
+    .stats{grid-template-columns:1fr}
+    .stat{border-right:none;border-bottom:1px solid rgba(255,255,255,.08)}
+    .stat:last-child{border-bottom:none}
+    .footer-inner{grid-template-columns:1fr}
+    .gallery{grid-template-columns:1fr}
+    section{margin-bottom:64px}
+  }
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-left">
+      <span>693 Fifth Avenue, 14th Floor, New York, NY</span>
+      <span>Mon–Fri 8am–6pm · Sat 9am–2pm</span>
+    </div>
+    <div class="topbar-right">
+      <a href="mailto:hello@brightsmile.com">hello@brightsmile.com</a>
+      <a href="tel:+15551234567">(555) 123-4567</a>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header id="header">
+  <div class="header-inner">
+    <div class="logo" data-goto="home">
+      <div class="logo-mark">B</div>
+      <div class="logo-text">
+        <div class="logo-name">BrightSmile</div>
+        <div class="logo-sub">Aesthetic &amp; Implant Dentistry</div>
+      </div>
+    </div>
+    <nav class="main-nav" id="nav">
+      <button class="nav-item active" data-tab="home">Home</button>
+      <button class="nav-item" data-tab="about">About</button>
+      <button class="nav-item" data-tab="services">Procedures</button>
+      <button class="nav-item" data-tab="team">Our Team</button>
+      <button class="nav-item" data-tab="patient">Patient Info</button>
+      <button class="nav-item" data-tab="testimonials">Gallery</button>
+      <button class="nav-item" data-tab="contact">Contact</button>
+    </nav>
+    <div style="display:flex;align-items:center;gap:12px">
+      <a href="tel:+15551234567" class="call-btn">
+        <span class="call-inner">
+          <span class="call-a">Call Us</span>
+          <span class="call-b">(555) 123-4567</span>
+        </span>
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ HOME ============ -->
+<section id="home" class="tab-content active">
+
+  <!-- Hero -->
+  <div class="hero reveal">
+    <div class="hero-text">
+      <div class="eyebrow">Natural Vibrant Smiles</div>
+      <h1>World-class smiles, crafted in Manhattan.</h1>
+      <p class="lead">Aesthetic and implant dentistry delivered with precision, artistry, and a gentle touch. For over 25 years, our team has restored and enhanced smiles for patients from around the world.</p>
+      <div class="hero-actions">
+        <a href="tel:+15551234567" class="call-btn">
+          <span class="call-inner">
+            <span class="call-a">Call Us</span>
+            <span class="call-b">(555) 123-4567</span>
+          </span>
+        </a>
+        <button class="btn-outline" data-goto="contact">Request Consultation</button>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="https://imgs.search.brave.com/z4f1hF9XjUnx9pasvLYU_qsEsMQhmg0CN-mO37U6SRE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wNDkv/NDgzLzE2MC9zbWFs/bC9iZWF1dGlmdWwt/YmxvbmRlLXdvbWFu/LXNtaWxpbmctd2l0/aC1icmlnaHQtd2hp/dGUtdGVldGgtcGhv/dG8uanBn" alt="Patient with a bright, natural smile" loading="eager">
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats reveal">
+    <div class="stat"><div class="stat-num">25+</div><div class="stat-label">Years of Practice</div></div>
+    <div class="stat"><div class="stat-num">8,000+</div><div class="stat-label">Smiles Restored</div></div>
+    <div class="stat"><div class="stat-num">4.9</div><div class="stat-label">Patient Rating</div></div>
+    <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Countries Served</div></div>
+  </div>
+
+  <!-- Featured Procedures -->
+  <section>
+    <div class="section-head reveal">
+      <div class="eyebrow">Featured Procedures</div>
+      <h2>Advanced solutions for complex dental cases</h2>
+      <p class="lead">From single-tooth aesthetics to full-mouth reconstruction, every treatment is planned with precision and delivered with artistry.</p>
+    </div>
+    <div class="procedures">
+      <div class="proc reveal d1">
+        <span class="proc-num">I.</span>
+        <h3>Smile Makeover</h3>
+        <p>Enhance or restore the natural beauty of your teeth with one or more cosmetic treatments, custom-designed for your face and smile.</p>
+        <a href="#" class="proc-link" data-goto="services">Explore</a>
+      </div>
+      <div class="proc reveal d2">
+        <span class="proc-num">II.</span>
+        <h3>Full Mouth Rehabilitation</h3>
+        <p>A complete reconstruction of health, function, and appearance — combining multiple procedures into one coordinated plan.</p>
+        <a href="#" class="proc-link" data-goto="services">Explore</a>
+      </div>
+      <div class="proc reveal d3">
+        <span class="proc-num">III.</span>
+        <h3>Implant Dentistry</h3>
+        <p>A reliable, durable replacement for missing teeth that looks natural, feels comfortable, and lasts for decades.</p>
+        <a href="#" class="proc-link" data-goto="services">Explore</a>
+      </div>
+      <div class="proc reveal d4">
+        <span class="proc-num">IV.</span>
+        <h3>TMJ Treatment</h3>
+        <p>Relieve jaw pain and restore optimal function with a treatment plan tailored to your specific TMJ condition.</p>
+        <a href="#" class="proc-link" data-goto="services">Explore</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Doctor -->
+  <section>
+    <div class="feature-doctor reveal">
+      <div class="portrait">
+        <img src="https://imgs.search.brave.com/kncmIcMnrI6pdUGx8xJhUXUu09B6fJdBdcNXX5Tl7ao/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWcu/bWFnbmlmaWMuY29t/L2ZyZWUtcGhvdG8v/aGFuZHNvbWUtbWFu/LXNtaWxpbmctaGFw/cHktZmFjZS1wb3J0/cmFpdC1jbG9zZS11/cF81Mzg3Ni0xNDU0/OTMuanBnP2dhPUdB/MS4xLjU0NjY0MTkw/LjE3OTAzNTY3MTQm/c2VtdD1haXNfaHli/cmlkJnc9NzQwJnE9/ODA" alt="Dr. Diana Reyes" loading="lazy">
+      </div>
+      <div class="bio">
+        <div class="eyebrow">The Dr. Reyes Experience</div>
+        <h2>A standard of care recognized worldwide</h2>
+        <p>Dr. Diana Reyes is the founder of BrightSmile Dental and a respected prosthodontic specialist in New York and around the world. She serves as an Associate Professor of Prosthodontics at NYU College of Dentistry and routinely lectures on advanced aesthetic and implant dentistry.</p>
+        <p>Her mission is to serve each patient's dental needs while advancing the field of restorative care on an industry level.</p>
+        <div class="credential">
+          <div class="credential-label">Founder &amp; Lead Prosthodontist</div>
+          <div class="credential-value">Dr. Diana Reyes, DDS, FACP</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Smile Gallery -->
+  <section>
+    <div class="section-head reveal">
+      <div class="eyebrow">Smile Gallery</div>
+      <h2>Real results from real patients</h2>
+      <p class="lead">A glimpse into the artistry of our aesthetic and reconstructive team.</p>
+    </div>
+    <div class="gallery">
+      <figure class="reveal d1">
+        <img src="https://imgs.search.brave.com/z4f1hF9XjUnx9pasvLYU_qsEsMQhmg0CN-mO37U6SRE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wNDkv/NDgzLzE2MC9zbWFs/bC9iZWF1dGlmdWwt/YmxvbmRlLXdvbWFu/LXNtaWxpbmctd2l0/aC1icmlnaHQtd2hp/dGUtdGVldGgtcGhv/dG8uanBn" alt="Smile makeover result" loading="lazy">
+        <figcaption>Smile Makeover</figcaption>
+      </figure>
+      <figure class="reveal d2">
+        <img src="https://imgs.search.brave.com/CddkLmLiOrsuxCxaXlHYVwAICb73vq7oTEIT48esevA/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMjIz/NTg3MDY0Mi9waG90/by9oYXBweS1hc2lh/bi13b21hbi13aXRo/LXBlcmZlY3Qtd2hp/dGUtdGVldGgtc21p/bGUtd29tZW4tbGlw/cy10cmVhdG1lbnQt/bW91dGgtY2FyZS1i/ZWF1dGlmdWwuanBn/P3M9NjEyeDYxMiZ3/PTAmaz0yMCZjPXdF/UnB5bFlucko5Y3Ru/MFNUQ1BBSlpmajFY/bm1WYXpWakVRLUVN/RmtCYWc9" alt="Whitening result" loading="lazy">
+        <figcaption>Teeth Whitening</figcaption>
+      </figure>
+      <figure class="reveal d3">
+        <img src="https://imgs.search.brave.com/v_qSgDknS9mL5OZQozx2wtD2FrJVAh0XyrK-lHvadw8/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWcu/bWFnbmlmaWMuY29t/L2ZyZWUtcGhvdG8v/Y2xvc2UtdXAtcG9y/dHJhaXQtc21pbGlu/Zy1taWxsZW5uaWFs/LWJsYWNrLWdpcmwt/c2hvd2luZy1oYXBw/eS1mYWNlLWV4cHJl/c3Npb24tY2hlZXJm/dWwtbG9vay1oZWFs/dGh5LW5hdHVyYWwt/c2tpbi10ZWV0aC1z/dGFuZGluZy13aGl0/ZS1iYWNrZ3JvdW5k/XzE3NjQyMC01MDUx/MS5qcGc_Z2E9R0Ex/LjEuNTQ2NjQxOTAu/MTc5MDM1NjcxNCZz/ZW10PWFpc19oeWJy/aWQmdz03NDAmcT04/MA" alt="Cosmetic result" loading="lazy">
+        <figcaption>Veneers</figcaption>
+      </figure>
+      <figure class="reveal d4">
+        <img src="https://imgs.search.brave.com/kncmIcMnrI6pdUGx8xJhUXUu09B6fJdBdcNXX5Tl7ao/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWcu/bWFnbmlmaWMuY29t/L2ZyZWUtcGhvdG8v/aGFuZHNvbWUtbWFu/LXNtaWxpbmctaGFw/cHktZmFjZS1wb3J0/cmFpdC1jbG9zZS11/cF81Mzg3Ni0xNDU0/OTMuanBnP2dhPUdB/MS4xLjU0NjY0MTkw/LjE3OTAzNTY3MTQm/c2VtdD1haXNfaHli/cmlkJnc9NzQwJnE9ODA" alt="Implant result" loading="lazy">
+        <figcaption>Implant Restoration</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Media strip -->
+  <section>
+    <div class="media-strip reveal">
+      <div class="media-item">As Featured In</div>
+      <div class="media-item">Vogue</div>
+      <div class="media-item">The New York Times</div>
+      <div class="media-item">Dental Tribune</div>
+      <div class="media-item">Aesthetic Dentistry</div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section>
+    <div class="cta reveal">
+      <h2>Begin your smile journey</h2>
+      <p>Schedule a private consultation with our team and discover what's possible for your smile.</p>
+      <a href="tel:+15551234567" class="call-btn">
+        <span class="call-inner">
+          <span class="call-a">Call Us</span>
+          <span class="call-b">(555) 123-4567</span>
+        </span>
+      </a>
+    </div>
+  </section>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about" class="tab-content">
+  <div style="padding:56px 0 20px">
+    <div class="eyebrow reveal">Our Practice</div>
+    <h1 class="reveal d1">A boutique practice on Fifth Avenue</h1>
+    <p class="lead reveal d2" style="margin-top:20px">Founded in 1991, BrightSmile Dental has grown into one of New York's most respected aesthetic and implant dentistry practices. We combine advanced technology with an artistic eye to deliver natural, lasting results.</p>
+  </div>
+
+  <section>
+    <div class="feature-doctor reveal">
+      <div class="portrait">
+        <img src="https://imgs.search.brave.com/CddkLmLiOrsuxCxaXlHYVwAICb73vq7oTEIT48esevA/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMjIz/NTg3MDY0Mi9waG90/by9oYXBweS1hc2lh/bi13b21hbi13aXRo/LXBlcmZlY3Qtd2hp/dGUtdGVldGgtc21p/bGUtd29tZW4tbGlw/cy10cmVhdG1lbnQt/bW91dGgtY2FyZS1i/ZWF1dGlmdWwuanBn/P3M9NjEyeDYxMiZ3/PTAmaz0yMCZjPXdF/UnB5bFlucko5Y3Ru/MFNUQ1BBSlpmajFY/bm1WYXpWakVRLUVN/RmtCYWc9" alt="Modern dental practice interior" loading="lazy">
+      </div>
+      <div class="bio">
+        <h2>Where artistry meets science</h2>
+        <p>Every treatment plan begins with listening. We take the time to understand your goals, your concerns, and your lifestyle — then design a plan that fits you.</p>
+        <p>Our Midtown Manhattan office is equipped with digital imaging, 3D planning tools, and an on-site laboratory, allowing us to handle complex cases with precision and efficiency.</p>
+        <div class="credential">
+          <div class="credential-label">Location</div>
+          <div class="credential-value">693 Fifth Avenue, 14th Floor, New York, NY 10022</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head reveal">
+      <div class="eyebrow">What Sets Us Apart</div>
+      <h2>A higher standard of care</h2>
+    </div>
+    <div class="procedures">
+      <div class="proc reveal d1">
+        <span class="proc-num">01</span>
+        <h3>Nationally Recognized Team</h3>
+        <p>Our doctors are among the top dental professionals in NYC, with decades of combined experience in prosthodontics, implantology, and aesthetic dentistry.</p>
+      </div>
+      <div class="proc reveal d2">
+        <span class="proc-num">02</span>
+        <h3>Comprehensive Treatment Planning</h3>
+        <p>We take a holistic approach — considering function, aesthetics, and long-term health together, not as separate problems.</p>
+      </div>
+      <div class="proc reveal d3">
+        <span class="proc-num">03</span>
+        <h3>Advanced Technology</h3>
+        <p>Digital X-rays, 3D imaging, intraoral cameras, and on-site lab work mean faster, more predictable outcomes.</p>
+      </div>
+      <div class="proc reveal d4">
+        <span class="proc-num">04</span>
+        <h3>Patient-First Philosophy</h3>
+        <p>Transparent pricing, honest recommendations, and a comfortable, judgment-free environment at every visit.</p>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section id="services" class="tab-content">
+  <div style="padding:56px 0 20px">
+    <div class="eyebrow reveal">Our Procedures</div>
+    <h1 class="reveal d1">Comprehensive aesthetic &amp; implant dentistry</h1>
+    <p class="lead reveal d2" style="margin-top:20px">From routine care to full-mouth reconstruction, every procedure is delivered with the same attention to detail.</p>
+  </div>
+
+  <section>
+    <div class="procedures">
+      <div class="proc reveal d1"><span class="proc-num">01</span><h3>Smile Makeover</h3><p>Veneers, bonding, whitening, and gum contouring — combined into a single, customized treatment plan.</p></div>
+      <div class="proc reveal d2"><span class="proc-num">02</span><h3>Full Mouth Rehabilitation</h3><p>Complete restoration of function and aesthetics for patients with extensive wear, damage, or missing teeth.</p></div>
+      <div class="proc reveal d3"><span class="proc-num">03</span><h3>Implant Dentistry</h3><p>Single implants, implant bridges, and full-arch solutions — placed with 3D precision for lasting results.</p></div>
+      <div class="proc reveal d4"><span class="proc-num">04</span><h3>TMJ Treatment</h3><p>Diagnosis and treatment of temporomandibular joint disorders to relieve pain and restore function.</p></div>
+      <div class="proc reveal d1"><span class="proc-num">05</span><h3>Porcelain Veneers</h3><p>Ultra-thin, custom-crafted veneers that transform the shape, color, and alignment of your smile.</p></div>
+      <div class="proc reveal d2"><span class="proc-num">06</span><h3>Teeth Whitening</h3><p>Professional-grade whitening for a brighter smile — safe, effective, and tailored to your sensitivity level.</p></div>
+      <div class="proc reveal d3"><span class="proc-num">07</span><h3>Crowns &amp; Bridges</h3><p>All-porcelain restorations designed to match your natural teeth in color, translucency, and shape.</p></div>
+      <div class="proc reveal d4"><span class="proc-num">08</span><h3>General &amp; Preventive Care</h3><p>Cleanings, exams, digital X-rays, and fillings — the foundation of a healthy smile.</p></div>
+    </div>
+  </section>
+</section>
+
+<!-- ============ TEAM ============ -->
+<section id="team" class="tab-content">
+  <div style="padding:56px 0 20px">
+    <div class="eyebrow reveal">Our Doctors</div>
+    <h1 class="reveal d1">Some of the best in the business</h1>
+    <p class="lead reveal d2" style="margin-top:20px">A multi-specialty team with a shared commitment to excellence.</p>
+  </div>
+
+  <section>
+    <div class="team-row">
+      <div class="team-card reveal d1">
+        <div class="team-avatar">
+          <img src="https://imgs.search.brave.com/z4f1hF9XjUnx9pasvLYU_qsEsMQhmg0CN-mO37U6SRE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wNDkv/NDgzLzE2MC9zbWFs/bC9iZWF1dGlmdWwt/YmxvbmRlLXdvbWFu/LXNtaWxpbmctd2l0/aC1icmlnaHQtd2hp/dGUtdGVldGgtcGhv/dG8uanBn" alt="Dr. Diana Reyes" loading="lazy">
+        </div>
+        <h3>Dr. Diana Reyes</h3>
+        <div class="team-role">Founder &amp; Prosthodontist</div>
+        <p>25+ years in aesthetic and implant dentistry. Associate Professor at NYU College of Dentistry.</p>
+      </div>
+      <div class="team-card reveal d2">
+        <div class="team-avatar">
+          <img src="https://imgs.search.brave.com/kncmIcMnrI6pdUGx8xJhUXUu09B6fJdBdcNXX5Tl7ao/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWcu/bWFnbmlmaWMuY29t/L2ZyZWUtcGhvdG8v/aGFuZHNvbWUtbWFu/LXNtaWxpbmctaGFw/cHktZmFjZS1wb3J0/cmFpdC1jbG9zZS11/cF81Mzg3Ni0xNDU0/OTMuanBnP2dhPUdB/MS4xLjU0NjY0MTkw/LjE3OTAzNTY3MTQm/c2VtdD1haXNfaHli/cmlkJnc9NzQwJnE9ODA" alt="Dr. Marcus Chen" loading="lazy">
+        </div>
+        <h3>Dr. Marcus Chen</h3>
+        <div class="team-role">Implant Specialist</div>
+        <p>Expert in complex implant cases and full-arch reconstruction with advanced 3D planning.</p>
+      </div>
+      <div class="team-card reveal d3">
+        <div class="team-avatar">
+          <img src="https://imgs.search.brave.com/v_qSgDknS9mL5OZQozx2wtD2FrJVAh0XyrK-lHvadw8/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWcu/bWFnbmlmaWMuY29t/L2ZyZWUtcGhvdG8v/Y2xvc2UtdXAtcG9y/dHJhaXQtc21pbGlu/Zy1taWxsZW5uaWFs/LWJsYWNrLWdpcmwt/c2hvd2luZy1oYXBw/eS1mYWNlLWV4cHJl/c3Npb24tY2hlZXJm/dWwtbG9vay1oZWFs/dGh5LW5hdHVyYWwt/c2tpbi10ZWV0aC1z/dGFuZGluZy13aGl0/ZS1iYWNrZ3JvdW5k/XzE3NjQyMC01MDUx/MS5qcGc_Z2E9R0Ex/LjEuNTQ2NjQxOTAu/MTc5MDM1NjcxNCZz/ZW10PWFpc19oeWJy/aWQmdz03NDAmcT04/MA" alt="Dr. Sofia Patel" loading="lazy">
+        </div>
+        <h3>Dr. Sofia Patel</h3>
+        <div class="team-role">Aesthetic Dentist</div>
+        <p>Specializes in smile design, veneers, and minimally invasive cosmetic treatments.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="cta reveal">
+      <h2>Consult with our team</h2>
+      <p>We welcome patients from across the country and around the world. Schedule a private consultation today.</p>
+      <button class="btn-outline" style="border-color:var(--gold);color:var(--gold)" data-goto="contact">Request Consultation</button>
+    </div>
+  </section>
+</section>
+
+<!-- ============ PATIENT INFO ============ -->
+<section id="patient" class="tab-content">
+  <div style="padding:56px 0 20px">
+    <div class="eyebrow reveal">Patient Information</div>
+    <h1 class="reveal d1">What to expect</h1>
+    <p class="lead reveal d2" style="margin-top:20px">New patients are always welcome. Here's how we make your first visit smooth and comfortable.</p>
+  </div>
+
+  <section>
+    <div class="procedures">
+      <div class="proc reveal d1"><span class="proc-num">01</span><h3>Before Your Visit</h3><p>Complete your patient forms online. Bring your ID, insurance card, and any prior dental records or X-rays.</p></div>
+      <div class="proc reveal d2"><span class="proc-num">02</span><h3>Your First Appointment</h3><p>We'll review your history, take digital imaging, and discuss your goals in a relaxed, unhurried consultation.</p></div>
+      <div class="proc reveal d3"><span class="proc-num">03</span><h3>Your Treatment Plan</h3><p>You'll receive a clear, written plan with options, timelines, and transparent pricing — no pressure.</p></div>
+      <div class="proc reveal d4"><span class="proc-num">04</span><h3>Ongoing Care</h3><p>Regular checkups and cleanings keep your results looking their best for years to come.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head reveal">
+      <div class="eyebrow">Financing &amp; Insurance</div>
+      <h2>Making quality care accessible</h2>
+      <p class="lead">We accept most major PPO insurance plans and offer flexible financing options for larger treatments. Our team will help you understand your benefits upfront.</p>
+    </div>
+  </section>
+</section>
+
+<!-- ============ TESTIMONIALS / GALLERY ============ -->
+<section id="testimonials" class="tab-content">
+  <div style="padding:56px 0 20px">
+    <div class="eyebrow reveal">Smile Gallery</div>
+    <h1 class="reveal d1">The artistry of our team</h1>
+    <p class="lead reveal d2" style="margin-top:20px">A selection of patient results — from subtle enhancements to complete transformations.</p>
+  </div>
+
+  <section>
+    <div class="gallery">
+      <figure class="reveal d1"><img src="https://imgs.search.brave.com/z4f1hF9XjUnx9pasvLYU_qsEsMQhmg0CN-mO37U6SRE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wNDkv/NDgzLzE2MC9zbWFs/bC9iZWF1dGlmdWwt/YmxvbmRlLXdvbWFu/LXNtaWxpbmctd2l0/aC1icmlnaHQtd2hp/dGUtdGVldGgtcGhv/dG8uanBn" alt="Smile result" loading="lazy"><figcaption>Smile Makeover</figcaption></figure>
+      <figure class="reveal d2"><img src="https://imgs.search.brave.com/CddkLmLiOrsuxCxaXlHYVwAICb73vq7oTEIT48esevA/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMjIz/NTg3MDY0Mi9waG90/by9oYXBweS1hc2lh/bi13b21hbi13aXRo/LXBlcmZlY3Qtd2hp/dGUtdGVldGgtc21p/bGUtd29tZW4tbGlw/cy10cmVhdG1lbnQt/bW91dGgtY2FyZS1i/ZWF1dGlmdWwuanBn/P3M9NjEyeDYxMiZ3/PTAmaz0yMCZjPXdF/UnB5bFlucko5Y3Ru/MFNUQ1BBSlpmajFY/bm1WYXpWakVRLUVN/RmtCYWc9" alt="Whitening result" loading="lazy"><figcaption>Teeth Whitening</figcaption></figure>
+      <figure class="reveal d3"><img src="https://imgs.search.brave.com/v_qSgDknS9mL5OZQozx2wtD2FrJVAh0XyrK-lHvadw8/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWcu/bWFnbmlmaWMuY29t/L2ZyZWUtcGhvdG8v/Y2xvc2UtdXAtcG9y/dHJhaXQtc21pbGlu/Zy1taWxsZW5uaWFs/LWJsYWNrLWdpcmwt/c2hvd2luZy1oYXBw/eS1mYWNlLWV4cHJl/c3Npb24tY2hlZXJm/dWwtbG9vay1oZWFs/dGh5LW5hdHVyYWwt/c2tpbi10ZWV0aC1z/dGFuZGluZy13aGl0/ZS1iYWNrZ3JvdW5k/XzE3NjQyMC01MDUx/MS5qcGc_Z2E9R0Ex/LjEuNTQ2NjQxOTAu/MTc5MDM1NjcxNCZz/ZW10PWFpc19oeWJy/aWQmdz03NDAmcT04/MA" alt="Cosmetic result" loading="lazy"><figcaption>Porcelain Veneers</figcaption></figure>
+      <figure class="reveal d4"><img src="https://imgs.search.brave.com/kncmIcMnrI6pdUGx8xJhUXUu09B6fJdBdcNXX5Tl7ao/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWcu/bWFnbmlmaWMuY29t/L2ZyZWUtcGhvdG8v/aGFuZHNvbWUtbWFu/LXNtaWxpbmctaGFw/cHktZmFjZS1wb3J0/cmFpdC1jbG9zZS11/cF81Mzg3Ni0xNDU0/OTMuanBnP2dhPUdB/MS4xLjU0NjY0MTkw/LjE3OTAzNTY3MTQm/c2VtdD1haXNfaHli/cmlkJnc9NzQwJnE9ODA" alt="Implant result" loading="lazy"><figcaption>Implant Restoration</figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head reveal">
+      <div class="eyebrow">Patient Stories</div>
+      <h2>In their own words</h2>
+    </div>
+    <div class="procedures">
+      <div class="proc reveal d1"><p style="font-family:var(--serif);font-size:17px;font-style:italic;color:var(--navy-soft);line-height:1.7">"I used to dread the dentist. BrightSmile completely changed that — the team is gentle, kind, and explains everything."</p><div style="margin-top:18px;font-size:12px;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold)">Jessica M. — Patient since 2018</div></div>
+      <div class="proc reveal d2"><p style="font-family:var(--serif);font-size:17px;font-style:italic;color:var(--navy-soft);line-height:1.7">"Got my implant done here and it looks completely natural. Dr. Chen was incredible."</p><div style="margin-top:18px;font-size:12px;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold)">David K. — Implant Patient</div></div>
+      <div class="proc reveal d3"><p style="font-family:var(--serif);font-size:17px;font-style:italic;color:var(--navy-soft);line-height:1.7">"My kids actually look forward to their dental visits now. Dr. Patel is amazing with children."</p><div style="margin-top:18px;font-size:12px;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold)">Amanda R. — Parent of Two</div></div>
+      <div class="proc reveal d4"><p style="font-family:var(--serif);font-size:17px;font-style:italic;color:var(--navy-soft);line-height:1.7">"Had a dental emergency on a Saturday and they got me in within an hour. Lifesavers."</p><div style="margin-top:18px;font-size:12px;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold)">Michael T. — Emergency Visit</div></div>
+    </div>
+  </section>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="tab-content">
+  <div style="padding:56px 0 20px">
+    <div class="eyebrow reveal">Contact</div>
+    <h1 class="reveal d1">Schedule your visit</h1>
+    <p class="lead reveal d2" style="margin-top:20px">We welcome patients from across the country and around the world. Reach out to begin your smile journey.</p>
+  </div>
+
+  <section>
+    <div class="contact-grid">
+      <div class="reveal d1">
+        <div class="info-row"><div class="info-key">Address</div><div class="info-val">693 Fifth Avenue, 14th Floor<br>@ 54th Street<br>New York, NY 10022</div></div>
+        <div class="info-row"><div class="info-key">Phone</div><div class="info-val"><a href="tel:+15551234567">(555) 123-4567</a></div></div>
+        <div class="info-row"><div class="info-key">Email</div><div class="info-val"><a href="mailto:info@brightsmile.com">info@brightsmile.com</a></div></div>
+        <div class="info-row"><div class="info-key">Hours</div><div class="info-val">Mon–Fri 8am–6pm<br>Saturday 9am–2pm<br>Sunday Closed</div></div>
+
+        <div style="margin-top:34px">
+          <a href="tel:+15551234567" class="call-btn" style="height:52px;padding:0 32px;font-size:14px">
+            <span class="call-inner" style="height:22px">
+              <span class="call-a" style="line-height:22px">Call Us</span>
+              <span class="call-b" style="line-height:22px">(555) 123-4567</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div class="reveal d2">
+        <div class="form">
+          <h3>Request a consultation</h3>
+          <p class="form-sub">Send us your details and we'll confirm your appointment by WhatsApp.</p>
+          <form id="appointment-form">
+            <div class="field-row">
+              <div class="field"><label>Full Name</label><input type="text" id="apt-name" required></div>
+              <div class="field"><label>Phone</label><input type="tel" id="apt-phone" required></div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label>Preferred Date</label><input type="date" id="apt-date" required></div>
+              <div class="field"><label>Preferred Time</label>
+                <select id="apt-time" required>
+                  <option value="">Select</option>
+                  <option>Morning (8am – 12pm)</option>
+                  <option>Afternoon (12pm – 4pm)</option>
+                  <option>Late Afternoon (4pm – 6pm)</option>
+                  <option>Saturday Morning</option>
+                </select>
+              </div>
+            </div>
+            <div class="field"><label>Service</label>
+              <select id="apt-service" required>
+                <option value="">Select</option>
+                <option>Smile Makeover</option>
+                <option>Full Mouth Rehabilitation</option>
+                <option>Implant Dentistry</option>
+                <option>TMJ Treatment</option>
+                <option>Veneers</option>
+                <option>Teeth Whitening</option>
+                <option>General Checkup</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="field"><label>Notes</label><textarea id="apt-notes" placeholder="Anything we should know?"></textarea></div>
+            <button type="submit" class="submit-btn">Send via WhatsApp</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">
+        <div class="logo-mark">B</div>
+        <div class="logo-text">
+          <div class="logo-name">BrightSmile</div>
+          <div class="logo-sub">Aesthetic &amp; Implant Dentistry</div>
+        </div>
+      </div>
+      <p>A boutique dental practice devoted to restoring and enhancing the natural beauty of your smile using conservative, state-of-the-art procedures.</p>
+    </div>
+    <div>
+      <h4>Practice</h4>
+      <a href="#" data-goto="home">Home</a>
+      <a href="#" data-goto="about">About</a>
+      <a href="#" data-goto="services">Procedures</a>
+      <a href="#" data-goto="team">Our Team</a>
+    </div>
+    <div>
+      <h4>Patients</h4>
+      <a href="#" data-goto="patient">Patient Info</a>
+      <a href="#" data-goto="testimonials">Smile Gallery</a>
+      <a href="#" data-goto="contact">Contact</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="tel:+15551234567">(555) 123-4567</a>
+      <a href="mailto:info@brightsmile.com">info@brightsmile.com</a>
+      <a href="#">693 Fifth Avenue, 14th Floor</a>
+      <a href="#">New York, NY 10022</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>&copy; 2025 BrightSmile Dental. All rights reserved.</div>
+    <div>Sample website for demonstration.</div>
+  </div>
+</footer>
+
+<script>
+  // ----- Config -----
+  const WHATSAPP_NUMBER = "15551234567";
+  const WHATSAPP_GREETING = "Hello BrightSmile Dental. I would like to request a consultation.";
+
+  // ----- Tab switching -----
+  const navItems = document.querySelectorAll('.nav-item');
+  const tabs = document.querySelectorAll('.tab-content');
+
+  function switchTab(id){
+    tabs.forEach(t => t.classList.toggle('active', t.id === id));
+    navItems.forEach(n => n.classList.toggle('active', n.dataset.tab === id));
+    document.getElementById('nav').classList.remove('open');
+    window.scrollTo({top:0, behavior:'smooth'});
+    requestAnimationFrame(() => revealInView());
+  }
+
+  navItems.forEach(item => {
+    item.addEventListener('click', () => switchTab(item.dataset.tab));
+  });
+
+  document.querySelectorAll('[data-goto]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchTab(el.dataset.goto);
+    });
+  });
+
+  // ----- Mobile menu -----
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('nav').classList.toggle('open');
+  });
+
+  // ----- Header shadow on scroll -----
+  window.addEventListener('scroll', () => {
+    document.getElementById('header').classList.toggle('scrolled', window.scrollY > 8);
+  }, { passive:true });
+
+  // ----- Reveal on scroll -----
+  const revealEls = document.querySelectorAll('.reveal');
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if(en.isIntersecting){
+        en.target.classList.add('in');
+        obs.unobserve(en.target);
+      }
+    });
+  }, { threshold:0.1, rootMargin:'0px 0px -50px 0px' });
+
+  function revealInView(){
+    revealEls.forEach(el => {
+      if(el.closest('.tab-content')?.classList.contains('active')){
+        const r = el.getBoundingClientRect();
+        if(r.top < window.innerHeight && r.bottom > 0) el.classList.add('in');
+      }
+    });
+  }
+
+  revealEls.forEach(el => obs.observe(el));
+  window.addEventListener('load', () => setTimeout(revealInView, 100));
+  window.addEventListener('scroll', revealInView, { passive:true });
+
+  // ----- Appointment → WhatsApp -----
+  document.getElementById('appointment-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('apt-name').value.trim();
+    const phone = document.getElementById('apt-phone').value.trim();
+    const date = document.getElementById('apt-date').value;
+    const time = document.getElementById('apt-time').value;
+    const service = document.getElementById('apt-service').value;
+    const notes = document.getElementById('apt-notes').value.trim();
+
+    const msg = `Hello BrightSmile Dental. I would like to request a consultation.
+
+Name: ${name}
+Phone: ${phone}
+Preferred date: ${date}
+Preferred time: ${time}
+Service: ${service}${notes ? `\nNotes: ${notes}` : ''}`;
+
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+  });
+</script>
+
+</body>
+</html>
