@@ -20,7 +20,8 @@
     --r-sm:8px; --r-md:14px; --r-lg:24px;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;overflow-x:hidden}
+  body{overflow-x:hidden}
   body{font-family:var(--sans);color:var(--ink);background:var(--cream);
     line-height:1.65;-webkit-font-smoothing:antialiased}
 
@@ -298,6 +299,15 @@
     main{padding:0 20px}
   }
   @media(max-width:560px){
+    html,body{width:100%;max-width:100%;overflow-x:hidden}
+    main{width:100%;max-width:100%;overflow-x:hidden}
+    .header-inner{padding:12px 14px;gap:8px}
+    .header-inner > div:last-child{gap:4px}
+    .header-inner .call-btn{display:none}
+    .logo{gap:9px;min-width:0}
+    .logo-text{min-width:0}
+    .logo-name{font-size:17px}
+    .logo-sub{font-size:8px;letter-spacing:1.8px;white-space:nowrap}
     .hero-text{padding:44px 30px}
     .hero-actions{flex-direction:column;align-items:stretch}
     .hero-actions .call-btn,.btn-outline{justify-content:center;width:100%}
@@ -798,7 +808,7 @@
 
 <script>
   // ----- Config -----
-  const WHATSAPP_NUMBER = "15551234567";
+  const WHATSAPP_NUMBER = "917907742968";
   const WHATSAPP_GREETING = "Hello BrightSmile Dental. I would like to request a consultation.";
 
   // ----- Tab switching -----
